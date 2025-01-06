@@ -776,17 +776,17 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
           if [ -n "$urlForAll" ]; then
             cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "$urlForAll").m3u8"
             [ -s "$cached_playlist" ] || yt-dlp "$urlForAll" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-            mpv.exe "$cached_playlist"
+            "mpv.exe" "$cached_playlist"
           else
             cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "$url").m3u8"
             [ -s "$cached_playlist" ] || yt-dlp "$url" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-            mpv.exe "$cached_playlist"
+            "mpv.exe" "$cached_playlist"
           fi
         else
           if [ -n "$urlForAll" ]; then
-            mpv.exe "$urlForAll"
+            "mpv.exe" "$urlForAll"
           else
-            mpv.exe "$url"
+            "mpv.exe" "$url"
           fi
         fi
         ;;
@@ -795,17 +795,17 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
           if [ -n "$urlForAll" ]; then
             cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "$urlForAll").m3u8"
             [ -s "$cached_playlist" ] || yt-dlp "$urlForAll" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-            mpv.exe "$cached_playlist" --no-video
+            "mpv.exe" "$cached_playlist" --no-video
           else
             cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "$url").m3u8"
             [ -s "$cached_playlist" ] || yt-dlp "$url" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-            mpv.exe "$cached_playlist" --no-video
+            "mpv.exe" "$cached_playlist" --no-video
           fi
         else
           if [ -n "$urlForAll" ]; then
-            mpv.exe "$urlForAll" --no-video
+            "mpv.exe" "$urlForAll" --no-video
           else
-            mpv.exe "$url" --no-video
+            "mpv.exe" "$url" --no-video
           fi
         fi
         ;;
@@ -839,7 +839,7 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
           video_id=$(echo "$video" | jq '.id' -r | sed 's/RD//g')
           cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "https://www.youtube.com/watch?v=${video_id}&list=RD$video_id").m3u8"
           [ -s "$cached_playlist" ] || yt-dlp "https://www.youtube.com/watch?v=${video_id}&list=RD$video_id" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-          mpv.exe "$cached_playlist" --no-video
+          "mpv.exe" "$cached_playlist" --no-video
         else
           if ! [ "$PLAYER" = mpv ] || [ "$PLATFORM" = android ]; then
             video_url=$(yt-dlp "$video_url" -q --no-warnings --get-url --format "bestaudio/best[height<=$VIDEO_QUALITY]/best" 2>/dev/null | tail -n 1)
@@ -859,7 +859,7 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
           *)
             case "$PLAYER" in
             mpv)
-              mpv.exe "$video_url" --no-video
+              "mpv.exe" "$video_url" --no-video
               ;;
             vlc) vlc "$video_url" --video-title "$title" ;;
             esac
@@ -901,7 +901,7 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
 
           cached_playlist="$CLI_AUTO_GEN_PLAYLISTS/$(generate_sha256 "https://www.youtube.com/watch?v=${video_id}&list=RD$video_id").m3u8"
           [ -s "$cached_playlist" ] || yt-dlp "https://www.youtube.com/watch?v=${video_id}&list=RD$video_id" --flat-playlist -J | jq '.entries[].url' -r >"$cached_playlist"
-          mpv.exe "$cached_playlist"
+          "mpv.exe" "$cached_playlist"
         else
           if ! [ "$PLAYER" = mpv ] || [ "$PLATFORM" = android ]; then
             video_url=$(yt-dlp "$video_url" -q --no-warnings --get-url --format "best[height<=$VIDEO_QUALITY]/best" 2>/dev/null | tail -n 1)
@@ -921,7 +921,7 @@ ${RED}󰈆${RESET}  Exit" | launcher "Select Media Action" | sed 's/.  //g')"
           *)
             case "$PLAYER" in
             mpv)
-              mpv.exe "$video_url"
+              "mpv.exe" "$video_url"
               ;;
             vlc) vlc "$video_url" --video-title "$title" ;;
             esac
